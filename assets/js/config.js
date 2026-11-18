@@ -34,8 +34,9 @@ window.DIGITALIS_CONFIG = {
   },
 
   seo: {
-    // Nom de domaine définitif à confirmer
-    domain: "",
+    // Nom de domaine définitif à confirmer — placeholder utilisé dans
+    // canonical/hreflang/sitemap : mettre à jour partout si différent.
+    domain: "https://digitalis-togo.com",
     defaultLang: "fr",
     langs: ["fr", "en"]
   },
