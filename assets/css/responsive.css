@@ -1,0 +1,137 @@
+/* ============================================================
+   DIGITALIS TOGO — responsive.css
+   Adaptations mobile / tablette
+   ============================================================ */
+
+@media (max-width: 1024px) {
+  :root {
+    --space-xl: 5rem;
+    --space-2xl: 7rem;
+  }
+
+  .split {
+    grid-template-columns: 1fr;
+  }
+
+  .split--reverse .split__media {
+    order: 0;
+  }
+
+  .footer-top {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .offers {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .offer,
+  .offer--wide {
+    grid-column: span 2;
+  }
+
+  .expertise {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 860px) {
+  :root {
+    --header-h: 68px;
+  }
+
+  /* Navigation */
+  .main-nav,
+  .header__cta {
+    display: none;
+  }
+
+  .nav-toggle {
+    display: block;
+  }
+
+  .brand__mark {
+    width: 38px;
+  }
+
+  /* Hero */
+  .hero__meta {
+    gap: var(--space-md);
+  }
+
+  .hero__visual .float-px {
+    /* moins de pixels flottants sur mobile via JS ; ici on calme */
+    animation-duration: 14s;
+  }
+
+  /* Sections */
+  .section {
+    padding-block: var(--space-lg);
+  }
+
+  .service-line {
+    grid-template-columns: 48px 1fr;
+  }
+
+  .service-line__tag {
+    display: none;
+  }
+
+  .method__step {
+    grid-template-columns: 72px 1fr;
+    gap: var(--space-md);
+  }
+
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form__row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .footer-top {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+
+  .footer-cta__logo {
+    width: min(220px, 60vw);
+  }
+
+  .legal dl {
+    grid-template-columns: 1fr;
+    gap: 0.2rem;
+  }
+
+  .legal dt {
+    margin-top: var(--space-xs);
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --space-md: 1.4rem;
+    --space-lg: 3rem;
+  }
+
+  .offers {
+    grid-template-columns: 1fr;
+  }
+
+  .offer,
+  .offer--wide {
+    grid-column: span 1;
+  }
+
+  .hero__actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

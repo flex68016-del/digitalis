@@ -1,0 +1,74 @@
+/* ============================================================
+   DIGITALIS TOGO — animations.css
+   Keyframes ambiants et utilitaires de motion
+   Les animations narratives (scroll, séquences) sont en JS/GSAP.
+   ============================================================ */
+
+/* ---------- Marquee ---------- */
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.marquee__track {
+  animation: marquee-scroll 36s linear infinite;
+}
+
+.marquee:hover .marquee__track {
+  animation-play-state: paused;
+}
+
+/* ---------- Pixels flottants (hero, ambient) ---------- */
+@keyframes float-drift {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  33% { transform: translate(var(--dx, 12px), var(--dy, -18px)) rotate(4deg); }
+  66% { transform: translate(calc(var(--dx, 12px) * -0.6), var(--dy, -6px)) rotate(-3deg); }
+}
+
+.float-px {
+  animation: float-drift var(--dur, 9s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+}
+
+/* ---------- Pixel pulse discret (connecteurs logo ambiants) ---------- */
+@keyframes px-pulse {
+  0%, 100% { opacity: var(--o, 0.5); transform: scale(1); }
+  50% { opacity: calc(var(--o, 0.5) * 0.45); transform: scale(0.82); }
+}
+
+.px-pulse {
+  animation: px-pulse var(--dur, 5s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+}
+
+/* ---------- Lien souligné animé (nav mobile, textes) ---------- */
+@keyframes dash-in {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}
+
+/* ---------- Indicateur scroll ---------- */
+@keyframes scroll-wheel {
+  0% { transform: translateY(-100%); }
+  55% { transform: translateY(0); }
+  100% { transform: translateY(100%); }
+}
+
+/* ---------- Skeleton / états ---------- */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.is-loading {
+  cursor: wait;
+}
+
+/* ---------- Respect mouvement réduit ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .marquee__track,
+  .float-px,
+  .px-pulse,
+  .hero__scrollcue::after {
+    animation: none !important;
+  }
+}
