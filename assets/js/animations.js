@@ -63,7 +63,11 @@
     var canvas = intro.querySelector(".intro__canvas");
 
     if (DT.reducedMotion || !gsap) {
-      finishIntro();
+      try { sessionStorage.setItem(INTRO_KEY, "1"); } catch (e) {}
+      intro.remove();
+      document.body.classList.add("intro-done");
+      document.body.style.overflow = "";
+      onDone && onDone();
       return;
     }
 
@@ -98,7 +102,7 @@
 
     var tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
-    // 1. Pixels : apparition + convergence vers le centre (zone logo)
+    // 1. Pixels : apparition
     tl.fromTo(
       pixels,
       { opacity: 0, scale: 0 },
@@ -252,19 +256,22 @@
     var items = section.querySelectorAll(".seq__chip");
     if (!stage || !items.length) return;
 
-    // Position de départ éparpillée, état final : grille ordonnée
-    var final = [];
-    items.forEach(function (chip, i) {
-      var r = Math.floor(i / 4);
-      var c = i % 4;
-      final.push({ x: c * 25 - 37.5, y: r * 25 - 25, chip: chip });
-      gsap.set(chip, {
-        x: (Math.random() - 0.5) * 160,
-        y: (Math.random() - 0.5) * 160,
-        rotation: (Math.random() - 0.5) * 50,
-        opacity: 0.15,
-        scale: 0.7
+    // Mobile : pas de séquence épinglée, simple révélation
+    if (DT.isTouch || window.innerWidth < 860) {
+      gsap.fromTo(items, { opacity: 0, y: 30 }, {
+        opacity: 1, y: 0, duration: 0.7, stagger: 0.06, ease: "power2.out",
+        scrollTrigger: { trigger: stage, start: "top 85%", once: true }
       });
+      return;
+    }
+
+    // État de départ éparpillé — la grille CSS porte déjà la position finale
+    gsap.set(items, {
+      x: function () { return (Math.random() - 0.5) * 320; },
+      y: function () { return (Math.random() - 0.5) * 320; },
+      rotation: function () { return (Math.random() - 0.5) * 60; },
+      opacity: 0,
+      scale: 0.6
     });
 
     var tl = gsap.timeline({
@@ -278,27 +285,20 @@
       }
     });
 
-    // Le titre de scène reste, les chips s'assemblent
+    // Les chips convergent vers leur place dans la grille
     tl.to(items, {
       opacity: 1,
       scale: 1,
-      duration: 1,
-      stagger: 0.15,
-      ease: "power2.out"
-    });
-
-    final.forEach(function (f) {
-      tl.to(f.chip, {
-        x: f.x + "%",
-        y: f.y + "%",
-        rotation: 0,
-        duration: 1.4,
-        ease: "power3.inOut"
-      }, "<0.2");
+      x: 0,
+      y: 0,
+      rotation: 0,
+      duration: 1.6,
+      stagger: 0.12,
+      ease: "power3.inOut"
     });
 
     // Transition vers la suite : le stage se dissout légèrement
-    tl.to(stage, { opacity: 0.25, duration: 0.8 }, ">-0.4");
+    tl.to(stage, { opacity: 0.2, duration: 0.8 }, ">-0.4");
   }
 
   /* ================================================================
@@ -313,6 +313,17 @@
     var panels = section.querySelectorAll(".seq__panel");
     var track = section.querySelector(".seq__track");
     if (!panels.length || !track) return;
+
+    // Mobile : défilement horizontal natif, pas de pin
+    if (DT.isTouch || window.innerWidth < 860) {
+      track.style.flexWrap = "nowrap";
+      section.style.overflowX = "auto";
+      gsap.fromTo(panels, { opacity: 0, y: 30 }, {
+        opacity: 1, y: 0, duration: 0.7, stagger: 0.08, ease: "power2.out",
+        scrollTrigger: { trigger: track, start: "top 85%", once: true }
+      });
+      return;
+    }
 
     // Défilement horizontal contrôlé par le scroll vertical
     gsap.to(track, {

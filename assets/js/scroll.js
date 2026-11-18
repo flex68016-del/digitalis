@@ -99,10 +99,10 @@
             }
           }
         );
-        // Masquer le débordement pour l'effet masque
+        // Masquer le débordement pour l'effet masque sur chaque ligne
         el.style.overflow = "hidden";
-        el.querySelectorAll(".line, .word").forEach(function (n) {
-          n.style.display = "block";
+        split.lines.forEach(function (line) {
+          line.style.overflow = "hidden";
         });
       });
     }

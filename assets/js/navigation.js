@@ -23,14 +23,27 @@
     }
 
     /* ---------- Lien actif selon la page ---------- */
-    var path = location.pathname.replace(/\\/index\.html$/, "/").replace(/\\.html$/, "");
+    var path = location.pathname.replace(/\/index\.html$/, "/").replace(/\.html$/, "");
     document.querySelectorAll(".main-nav a, .mobile-menu a").forEach(function (a) {
       var href = a.getAttribute("href");
       if (!href || href.startsWith("#")) return;
-      var target = href.replace(/\\.html$/, "").replace(/\\/index$/, "/");
+      var target = href.replace(/\.html$/, "").replace(/\/index$/, "/");
       if (target === path || (path === "/" && (target === "./" || target === "/" || target === "index"))) {
         a.classList.add("is-active");
         a.setAttribute("aria-current", "page");
+      }
+    });
+
+    /* ---------- Réseaux sociaux depuis config.js ---------- */
+    var cfg = (window.DIGITALIS_CONFIG && window.DIGITALIS_CONFIG.social) || {};
+    document.querySelectorAll("[data-social]").forEach(function (a) {
+      var url = cfg[a.dataset.social];
+      if (url) {
+        a.href = url;
+        a.target = "_blank";
+        a.rel = "noopener noreferrer";
+      } else {
+        a.style.display = "none";
       }
     });
 
