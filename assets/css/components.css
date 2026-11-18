@@ -540,7 +540,7 @@
   font-size: var(--text-sm);
   font-weight: 700;
   letter-spacing: 0.2em;
-  color: var(--color-gray-300);
+  color: var(--color-gray-500);
   margin-bottom: var(--space-md);
   display: block;
 }
