@@ -86,6 +86,36 @@
     grid-template-columns: 1fr;
   }
 
+  /* Séquences : pas de pin ni de débordement horizontal */
+  .seq__stage {
+    height: auto !important;
+    min-height: 50vh;
+    padding: var(--space-md) 0;
+  }
+
+  .seq__chips {
+    grid-template-columns: repeat(2, 1fr) !important;
+    width: 92% !important;
+    gap: 0.6rem !important;
+  }
+
+  .seq__chip {
+    font-size: 0.75rem !important;
+    text-align: center;
+  }
+
+  .seq__track {
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: var(--space-sm) !important;
+    padding: 1rem 0 2rem !important;
+  }
+
+  .seq__panel {
+    flex: none !important;
+    width: 100% !important;
+  }
+
   .form__row {
     grid-template-columns: 1fr;
     gap: 0;
